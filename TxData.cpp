@@ -17,7 +17,7 @@
 
 #include "TxData.h"
 
-CTxData::CTxData(unsigned char* data, size_t data_len, wxString cs, ulong sessionId, packetType ptype)
+CTxData::CTxData(const unsigned char* data, size_t data_len, wxString cs, ulong sessionId, packetType ptype)
       : m_myCallSign(cs),
         m_sessionId(sessionId),
         m_bSent(false),

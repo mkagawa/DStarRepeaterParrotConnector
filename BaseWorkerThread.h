@@ -63,7 +63,7 @@ class CBaseWorkerThread : public wxThread {
     virtual ~CBaseWorkerThread();
 
     virtual size_t WriteData(const unsigned char* data, size_t len);
-    void RegisterOtherInstance(CBaseWorkerThread* ptr);
+    // void RegisterOtherInstance(CBaseWorkerThread* ptr);
 
     static CBaseWorkerThread* CreateInstance(InstType, char siteId, unsigned int portNumber, wxString appName);
 
@@ -93,7 +93,7 @@ class CBaseWorkerThread : public wxThread {
     char m_siteId;
     //wxMessageQueue<CTxData *> *m_pSendingQueue;
     wxArrayCTxData m_arrHeaderPacket;
-    wxArrayCTxData SendToInstance(unsigned char* data, size_t len, packetType);
+    wxArrayCTxData SendToInstance(const unsigned char* data, size_t len, packetType);
     // thread execution starts here
     virtual ExitCode Entry();
     virtual int ProcessData() = 0;

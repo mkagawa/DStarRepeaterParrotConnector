@@ -149,12 +149,13 @@ bool CRepeaterConnectorApp::OnCmdLineParsed(wxCmdLineParser &parser) {
   }
 
   parser.Found("rptcmd", &CBaseWorkerThread::m_dstarRepeaterExe);
+  /*
   if(m_module[0]==m_module[1] || 
      m_module[1]==m_module[2] ||
      m_module[2]==m_module[0]) {
     cerr << "ERROR: module ids (mod1,mod2) must be unique" << endl;
     return false;
-  }
+  }*/
 
   return wxAppConsole::OnCmdLineParsed(parser);
 }
@@ -210,11 +211,12 @@ bool CRepeaterConnectorApp::OnInit() {
 
   //register other instance each oher
   for(int i = 0; i < m_threads.GetCount(); i++ ) {
+    /*
     for(int j = 0; j < m_threads.GetCount(); j++ ) {
       if(m_threads[i] != m_threads[j]) {
         m_threads[i]->RegisterOtherInstance(m_threads[j]);
       }
-    }
+    } */
     m_threads[i]->Run();
   }
 

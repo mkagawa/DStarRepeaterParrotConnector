@@ -178,20 +178,20 @@ CBaseWorkerThread::ExitCode CBaseWorkerThread::Entry() {
   return static_cast<ExitCode>(0);
 }
 
+/*
 void CBaseWorkerThread::RegisterOtherInstance(CBaseWorkerThread *ptr) {
   if(ptr != this) {
     wxLogInfo(wxT("Other thread instance is added"));
     m_threads.Add(ptr);
   }
-}
+} */
 
-wxArrayCTxData CBaseWorkerThread::SendToInstance(unsigned char* data, size_t len, packetType ptype) {
+wxArrayCTxData CBaseWorkerThread::SendToInstance(const unsigned char* data, size_t len, packetType ptype) {
   wxArrayCTxData arr;
-  for(int i = 0; i < m_threads.GetCount(); i++) {
-    CTxData* pTxData = new CTxData(data, len, m_curCallSign, m_curRxSessionId, ptype);
-    ((CBaseWorkerThread*)m_threads[i])->PostData(pTxData);
-    arr.Add(pTxData);
-  }
+  CTxData* pTxData = new CTxData(data, len, m_curCallSign, m_curRxSessionId, ptype);
+  //arr.Add(pTxData);
+  //wxLogMessage("SendToInstance: %d", pTxData->GetPacketType());
+  this->PostData(pTxData);
   return arr;
 }
 

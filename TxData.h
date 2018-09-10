@@ -49,7 +49,7 @@ class CTxData {
     bool m_bSent;
 
   public:
-    CTxData(unsigned char* data, size_t data_len, wxString cs, ulong sessionId, packetType);
+    CTxData(const unsigned char* data, size_t data_len, wxString cs, ulong sessionId, packetType);
     ~CTxData();
 
     void UpdatePacketType(packetType t) { m_packetType = t; }

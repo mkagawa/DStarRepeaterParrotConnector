@@ -150,7 +150,8 @@ int CDVAPWorkerThread::_ProcessMessage(size_t data_len) {
           m_arrHeaderPacket[i]->UpdatePacketType( packetType::HEADER_NOSEND );
         }
       }
-      SendToInstance(m_buffer, data_len, bClosingPacket ? packetType::CLOSING : packetType::DATA);
+      //wxLogMessage("isClosing %d", bClosingPacket ? 1: 0);
+      SendToInstance((const unsigned char*)m_buffer, data_len, bClosingPacket ? packetType::CLOSING : packetType::DATA);
     }
 
     if(bClosingPacket) {
@@ -188,7 +189,7 @@ int CDVAPWorkerThread::_ProcessMessage(size_t data_len) {
     while(m_curRxSessionId==0) {
       m_curRxSessionId = (ulong)rand();
     }
-    wxLogMessage(wxT("Headr: Sess:%X to: %s, r2: %s, r1: %s, my: %s/%s"), 
+    wxLogMessage(wxT("Header: Sess:%X to: %s, r2: %s, r1: %s, my: %s/%s"), 
           (uint)(m_curRxSessionId % 0xFFFF), cs, r2, r1, my, sx);
     m_packetSerialNo = 0U;
 
@@ -226,7 +227,8 @@ int CDVAPWorkerThread::_ProcessMessage(size_t data_len) {
     m_wbuffer[DVAP_HEADER_LEN-2] = 0x00;
     m_wbuffer[DVAP_HEADER_LEN-1] = 0x0b;
     m_iRxPacketCnt = 0;
-    m_arrHeaderPacket = SendToInstance(m_wbuffer, DVAP_HEADER_LEN, packetType::HEADER);
+    wxLogMessage("Header");
+    m_arrHeaderPacket = SendToInstance((const unsigned char*)m_wbuffer, DVAP_HEADER_LEN, packetType::HEADER);
     return 1;
 
   } else if(::memcmp(m_buffer,DVAP_REQ_NAME,DVAP_REQ_NAME_LEN)==0) {
@@ -322,7 +324,7 @@ int CDVAPWorkerThread::_ProcessMessage(size_t data_len) {
 }
 
 CDVAPWorkerThread::ExitCode CDVAPWorkerThread::Entry() {
-  cout << "CDVAPWorkerThread::Entry " << endl;
+  //cout << "CDVAPWorkerThread::Entry " << endl;
   auto e = m_pTxWorker->Create();
   if(e != wxThreadError::wxTHREAD_NO_ERROR) {
     delete m_pTxWorker;

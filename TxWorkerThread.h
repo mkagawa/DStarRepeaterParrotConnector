@@ -58,10 +58,11 @@ class CTxWorkerThread : public wxThread {
     //CBaseWorkerThread* m_pBaseWorker;
     char m_siteId;
     ulong m_curTxSessionId;
+    wxLongLong m_ReadyToSendTimeStamp;
     wxLongLong m_lastHeaderPacketTimeStamp;
     wxLongLong m_lastDataPacketTimeStamp;
     wxLongLong m_lastWriteTimeStamp;
-
+    packetType m_lastPacketType;
     wxSemaphore* m_bRunning;
     //bool m_bRunning = false;
     ulong m_iTxPacketCnt;
